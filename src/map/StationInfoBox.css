@@ -1,0 +1,106 @@
+.station-info-box {
+    /* Box styling is now applied via inline style (boxStyle) in the component,
+       so here you can include any additional common styles if needed. */
+    overflow-y: auto;
+  }
+  
+  .station-info-box::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .station-info-box::-webkit-scrollbar-track {
+    background: #1c1f50; /* Slightly darker than the background */
+  }
+  
+  .station-info-box::-webkit-scrollbar-thumb {
+    background-color: #3c8dbc;
+    border-radius: 4px;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .form-group {
+    margin-bottom: 10px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .actions button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3c8dbc;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .default-edit .manage-section {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .default-edit .manage-stations,
+  .default-edit .manage-lines {
+    flex: 1 1 45%;
+    margin-bottom: 20px;
+  }
+  
+  .default-edit form div {
+    margin-bottom: 10px;
+  }
+  
+  .trains-table th,
+  .trains-table td {
+    border: 1px solid #fff;
+    padding: 4px;
+    text-align: center;
+  }
+
+
+.edit-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .edit-row .left {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .edit-row .right {
+    margin-left: 10px;
+  }
+  
+  /* Ensure inputs and selects take full width of the left column */
+  .edit-row .left input,
+  .edit-row .left select {
+    width: 100%;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
