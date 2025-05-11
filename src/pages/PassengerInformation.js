@@ -1,8 +1,10 @@
 // src/pages/PassengerInformation.js
 import React, { useState, useEffect } from 'react';
 import BoxScreen from '../components/BoxScreen';
+import { useNavigate } from 'react-router-dom';
 
 const PassengerInformation = ({ onClose }) => {
+  const navigate = useNavigate();
   // State for live service updates and train statuses
   const [trainStatuses, setTrainStatuses] = useState([
     { id: 'Train 1', arrival: '08:05', delay: 0, disruption: '' },
@@ -95,7 +97,7 @@ const PassengerInformation = ({ onClose }) => {
   };
 
   return (
-    <BoxScreen title="Passenger Information" onClose={onClose}>
+    <BoxScreen title="Passenger Information" onClose={() => navigate('/')}>
       <div style={{ padding: '20px', color: 'white' }}>
         {/* Live Service Updates & Delay Notifications */}
         <h3>Live Service Updates & Delay Notifications</h3>

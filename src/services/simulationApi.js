@@ -4,10 +4,27 @@ const API_BASE_URL = process.env.REACT_APP_SIMULATION_API_URL || 'http://localho
 
 export const fetchSimulationData = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/metro-system`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
     }
+
+    const response = await fetch(`${API_BASE_URL}/metro-system`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        window.location.href = '/';
+      }
+      throw new Error(`Network response was not ok: ${response.status}`);
+    }
+
     const data = await response.json();
     return data;
   } catch (error) {

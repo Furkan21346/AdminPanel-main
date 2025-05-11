@@ -1,8 +1,10 @@
 // src/pages/MonitoringAnalytics.js
 import React, { useState, useEffect } from 'react';
 import BoxScreen from '../components/BoxScreen';
+import { useNavigate } from 'react-router-dom';
 
-const MonitoringAnalytics = ({ onClose }) => {
+const MonitoringAnalytics = () => {
+  const navigate = useNavigate();
   // Dummy data for Passenger Flow Prediction
   const [passengerFlowData, setPassengerFlowData] = useState([
     { station: 'Station A', predictedCrowd: 'High', predictedOccupancy: '80%' },
@@ -130,7 +132,7 @@ Service Reliability:
   }, []);
 
   return (
-    <BoxScreen title="Monitoring and Data Analytics" onClose={onClose}>
+    <BoxScreen title="Monitoring and Data Analytics" onClose={() => navigate('/')}>
       <div style={{ padding: '20px', color: 'white' }}>
         {/* Passenger Flow Prediction */}
         <h3>Passenger Flow Prediction</h3>

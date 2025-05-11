@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
+import { useNavigate } from 'react-router-dom';
+import gearIcon from '../assets/icons/settings.svg';
 
 function useWindowDimensions() {
   const [windowDimensions, setWindowDimensions] = useState({
@@ -124,6 +126,7 @@ export default function AnalyticsPage({ darkMode }) {
   ]);
   const { height } = useWindowDimensions();
   const chartHeight = Math.max(300, height * 0.3);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -149,6 +152,13 @@ export default function AnalyticsPage({ darkMode }) {
     minHeight: '100vh',
   };
 
+  const iconStyle = {
+    width: 30,
+    height: 30,
+    cursor: 'pointer',
+    marginTop: '20px',
+  };
+
   return (
     <div style={containerStyle}>
       <h1 style={{ color: darkMode ? '#fff' : '#000' }}>Analytics Dashboard</h1>
@@ -163,6 +173,13 @@ export default function AnalyticsPage({ darkMode }) {
       <div style={{ marginTop: '20px' }}>
         <AiInsightsPanel insights={aiInsights} darkMode={darkMode} />
       </div>
+      <img
+        src={gearIcon}
+        alt="Settings"
+        style={iconStyle}
+        title="Settings"
+        onClick={() => navigate('/settings')}
+      />
     </div>
   );
 }

@@ -1,8 +1,10 @@
 // src/pages/OperationalControl.js
 import React, { useState, useEffect } from 'react';
 import BoxScreen from '../components/BoxScreen';
+import { useNavigate } from 'react-router-dom';
 
-const OperationalControl = ({ onClose }) => {
+const OperationalControl = () => {
+  const navigate = useNavigate();
   // Dummy data for station capacities
   const [stationData, setStationData] = useState([
     { id: 1, name: 'Station A', capacity: 80, maxCapacity: 100, status: 'Normal' },
@@ -49,7 +51,7 @@ const OperationalControl = ({ onClose }) => {
   };
 
   return (
-    <BoxScreen title="Operational Control" onClose={onClose}>
+    <BoxScreen title="Operational Control" onClose={() => navigate('/') }>
       <div style={{ padding: '20px', color: 'white' }}>
         <h3>Station Capacities</h3>
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px' }}>

@@ -1,8 +1,10 @@
 // src/pages/EnergyManagement.js
 import React, { useState, useEffect } from 'react';
 import BoxScreen from '../components/BoxScreen';
+import { useNavigate } from 'react-router-dom';
 
-const EnergyManagement = ({ onClose }) => {
+const EnergyManagement = () => {
+  const navigate = useNavigate();
   // Basic energy management state
   const [energyData, setEnergyData] = useState({
     tractionPowerUsage: 75,      // percentage of traction power usage
@@ -109,7 +111,7 @@ Frequency: ${frequency.toFixed(2)} Hz`;
   };
 
   return (
-    <BoxScreen title="Energy Management" onClose={onClose}>
+    <BoxScreen title="Energy Management" onClose={() => navigate('/')}>
       <div style={{ padding: '20px', color: 'white' }}>
         {/* Section: Real-Time Energy Tracking */}
         <h3>Real-Time Energy Tracking</h3>

@@ -23,7 +23,17 @@ export const SimulationProvider = ({ children }) => {
     try {
       setLoading(true);
       const data = await fetchSimulationData();
-      setSimulationData(data);
+      
+      // Ensure unique keys for stations by combining line and station name
+      const processedData = {
+        ...data,
+        stations: data.stations.map(station => ({
+          ...station,
+          key: `${station.line}-${station.station}`
+        }))
+      };
+      
+      setSimulationData(processedData);
       setError(null);
     } catch (err) {
       setError(err.message);

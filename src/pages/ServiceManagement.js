@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import BoxScreen from '../components/BoxScreen';
+import { useNavigate } from 'react-router-dom';
 
-const ServiceManagement = ({ onClose }) => {
+const ServiceManagement = () => {
+  const navigate = useNavigate();
   const [schedules, setSchedules] = useState([
     { id: 1, train: 'Train A', departure: '08:00', arrival: '08:45', status: 'On Time', delay: '0 min' },
     { id: 2, train: 'Train B', departure: '08:30', arrival: '09:15', status: 'Delayed', delay: '5 min' },
@@ -43,7 +45,7 @@ const ServiceManagement = ({ onClose }) => {
   };
 
   return (
-    <BoxScreen title="Service Management and Planning" onClose={onClose}>
+    <BoxScreen title="Service Management and Planning" onClose={() => navigate('/')}>
       <div style={{ padding: '20px', color: 'white' }}>
         <h3>Current Train Schedules</h3>
         <table style={tableStyle}>

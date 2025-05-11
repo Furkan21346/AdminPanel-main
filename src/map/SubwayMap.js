@@ -1,5 +1,5 @@
 // SubwayMap.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle, useRef } from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 import DepotOverlay from './DepotOverlay';
@@ -179,14 +179,13 @@ const splitStationName = (name) => {
   return [name];
 };
 
-const SubwayMap = ({
+const SubwayMap = forwardRef(({
   editing,
   darkMode,
   showStationNames,
   onStationClick,
   isSelectingTransfer,
   transferPairs,
-  zoomRef,
   isSelectingStationToEdit,
   viewMode,
   depotData,
@@ -194,7 +193,7 @@ const SubwayMap = ({
   scissorRailData,
   scadaData, // not used directly here but passed if needed
   importedMapData, // NEW prop for importing map data
-}) => {
+}, ref) => {
   const { width, height } = useWindowDimensions();
   // We'll compute all stations for every line into one array.
   const [allStations, setAllStations] = useState([]);
@@ -203,6 +202,17 @@ const SubwayMap = ({
 
   // Use effectiveGridSpacing computed from the current viewMode.
   const effectiveGridSpacing = getEffectiveGridSpacing(viewMode);
+
+  const transformInstanceRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    zoomIn: () => {
+      if (transformInstanceRef.current) transformInstanceRef.current.zoomIn();
+    },
+    zoomOut: () => {
+      if (transformInstanceRef.current) transformInstanceRef.current.zoomOut();
+    }
+  }), []);
 
   useEffect(() => {
     if (importedMapData) {
@@ -382,7 +392,10 @@ const backgroundColor = backgroundColors[viewMode]
         </div>
       )}
 
-      <TransformWrapper panning={{ disabled: editing ? !mapPanningEnabled : false }} ref={zoomRef}>
+      <TransformWrapper
+        panning={{ disabled: editing ? !mapPanningEnabled : false }}
+        ref={transformInstanceRef}
+      >
         <TransformComponent>
           <svg
             width={width}
@@ -742,6 +755,6 @@ const backgroundColor = backgroundColors[viewMode]
       </TransformWrapper>
     </div>
   );
-};
+});
 
 export default SubwayMap;

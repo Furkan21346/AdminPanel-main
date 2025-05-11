@@ -84,3 +84,83 @@ body {
   padding-right: 0px;
 }
 
+/* Strongest dark mode override for root page and all containers */
+.App.dark-mode,
+.App.dark-mode .app-container,
+.App.dark-mode .main-content,
+.App.dark-mode body,
+.App.dark-mode #root {
+  background: #181a1b !important;
+  color: #f5f5f5 !important;
+}
+.App.dark-mode > *,
+.App.dark-mode .app-container > *,
+.App.dark-mode .main-content > * {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+.dark-mode .side-nav,
+.dark-mode .right-side-nav,
+.dark-mode .station-info-box {
+  background: #23272a !important;
+  color: #f5f5f5 !important;
+}
+
+.dark-mode svg,
+.dark-mode .metro-line {
+  stroke: #f5f5f5;
+}
+
+.dark-mode .App-header {
+  background-color: #1b1b1b;
+  color: #fff;
+}
+
+.simulation-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.simulation-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.simulation-data {
+  display: grid;
+  gap: 2rem;
+}
+
+.stations, .trains {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.station-card, .train-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.station-card h3, .train-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.station-card p, .train-card p {
+  margin: 0.25rem 0;
+  color: #666;
+}
+
+h2 {
+  color: #444;
+  margin: 1.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #eee;
+}
+

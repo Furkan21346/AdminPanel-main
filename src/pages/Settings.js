@@ -1,6 +1,7 @@
 // src/pages/Settings.js
 import React, { useState } from 'react';
 import BoxScreen from '../components/BoxScreen';
+import { useNavigate } from 'react-router-dom';
 
 import { importSubwayData, exportSubwayData } from '../map/SubwayLoadSave';
 
@@ -58,6 +59,7 @@ const handleImportMapText = (fileText) => {
 
 
 const Settings = ({ onClose }) => {
+  const navigate = useNavigate();
   // User Access Management dummy state
   const [users, setUsers] = useState([
     { id: 1, name: 'Admin User', role: 'Administrator', permissions: 'All' },
@@ -156,7 +158,7 @@ const Settings = ({ onClose }) => {
   };
 
   return (
-    <BoxScreen title="Settings, Management, and System Status" onClose={onClose}>
+    <BoxScreen title="Settings, Management, and System Status" onClose={() => navigate('/')}>
       <div style={{ padding: '20px', color: 'white' }}>
         {/* User Access Management */}
         <h3>User Access Management</h3>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import BoxScreen from '../components/BoxScreen';
+import { useNavigate } from 'react-router-dom';
 
-const SecurityMonitoring = ({ onClose }) => {
+const SecurityMonitoring = () => {
+  const navigate = useNavigate();
   // Dummy data for CCTV feeds
   const [cctvFeeds, setCctvFeeds] = useState([
     { id: 1, location: 'Station A - Platform 1', feedUrl: 'http://example.com/feed1', status: 'Active' },
@@ -39,7 +41,7 @@ const SecurityMonitoring = ({ onClose }) => {
   }, []);
 
   return (
-    <BoxScreen title="Security and Monitoring" onClose={onClose}>
+    <BoxScreen title="Security and Monitoring" onClose={() => navigate('/')}>
       <div style={{ padding: '20px', color: 'white' }}>
         <h3>CCTV Feeds</h3>
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px' }}>
