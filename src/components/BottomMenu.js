@@ -3,7 +3,7 @@ import originalMapIcon from '../assets/icons/vector-map.svg';
 import leafletMapIcon from '../assets/icons/map.svg';
 import analyticsIcon from '../assets/icons/analytics.svg';
 
-const BottomMenu = ({ onVectorMap, onLeafletMap, onAnalyticsPage }) => {
+const BottomMenu = ({ onVectorMapClick, onLeafletMapClick, onAnalyticsClick }) => {
   const containerStyle = {
     position: 'fixed',
     bottom: 25,
@@ -35,21 +35,21 @@ const BottomMenu = ({ onVectorMap, onLeafletMap, onAnalyticsPage }) => {
         alt="Original Map"
         style={iconStyle}
         title="Original Map"
-        onClick={onVectorMap}
+        onClick={onVectorMapClick}
       />
       <img
         src={leafletMapIcon}
         alt="Leaflet Map"
         style={iconStyle}
         title="Leaflet Map"
-        onClick={onLeafletMap}
+        onClick={onLeafletMapClick}
       />
       <img
         src={analyticsIcon}
         alt="Analytics"
         style={iconStyle}
         title="Analytics"
-        onClick={onAnalyticsPage}
+        onClick={onAnalyticsClick}
       />
     </div>
   );

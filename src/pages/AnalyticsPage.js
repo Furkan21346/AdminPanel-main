@@ -117,7 +117,7 @@ function AiInsightsPanel({ insights, darkMode }) {
   );
 }
 
-export default function AnalyticsPage({ darkMode }) {
+function App({ darkMode }) {
   const [trainData, setTrainData] = useState([50, 70, 40, 90]);
   const [stationData, setStationData] = useState([120, 80, 150, 100]);
   const [aiInsights, setAiInsights] = useState([
@@ -183,3 +183,5 @@ export default function AnalyticsPage({ darkMode }) {
     </div>
   );
 }
+
+export default App;

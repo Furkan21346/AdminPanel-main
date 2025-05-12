@@ -13,7 +13,7 @@ const RightSideNav = ({
   setIsSelectingStationToEdit,
   setSelectedStation,
   viewMode,
-  onViewModeChange,  // New prop for toggling view mode
+  onViewModeChange,
 }) => {
   const navStyle = {
     position: 'fixed',
@@ -21,7 +21,7 @@ const RightSideNav = ({
     right: 25,
     padding: 15,
     borderRadius: 30,
-    backgroundColor: 'white',
+    backgroundColor: darkMode ? '#333' : 'white',
     boxShadow: '0 3px 4px rgba(0,0,0,0.25)',
     display: 'flex',
     flexDirection: 'column',
@@ -34,6 +34,7 @@ const RightSideNav = ({
     height: 30,
     margin: '10px 0',
     cursor: 'pointer',
+    filter: darkMode ? 'invert(1)' : 'none',
   };
 
   return (
@@ -64,7 +65,7 @@ const RightSideNav = ({
           } else {
             setEditing(false);
             setIsSelectingStationToEdit(false);
-            setSelectedStation(null); // Close edit box as well.
+            setSelectedStation(null);
           }
         }}
       />

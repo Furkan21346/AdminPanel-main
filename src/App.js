@@ -1,6 +1,6 @@
 // src/App.js
 import React, { useState, useRef, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { MetroProvider } from './context/MetroContext';
 import { SimulationProvider } from './context/SimulationContext';
 
@@ -56,6 +56,9 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [simulationData, setSimulationData] = useState(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Sayfa yüklendiğinde token kontrolü
@@ -425,95 +428,116 @@ const testScissorRails = [
   return (
     <SimulationProvider>
       <MetroProvider>
-        <Router>
-          <div className={`App ${darkMode ? 'dark-mode' : ''}`}>
-            {!isLoggedIn ? (
-              <Login onLogin={setIsLoggedIn} />
-            ) : (
-              <>
-                <SideNav setShowPanel={setShowPanel} />
-                <div className="main-content">
-                  <Routes>
-                    <Route path="/" element={
-                      <div className="app-container">
-                        <SideNav setShowPanel={setShowPanel} />
-                        <div className="main-content">
-                          {mapMode === 'vector' && (
-                            <SubwayMap
-                              ref={zoomRef}
-                              editing={editing}
-                              darkMode={darkMode}
-                              onStationClick={handleStationClick}
-                              showStationNames={showStationNames}
-                              isSelectingTransfer={isSelectingTransfer}
-                              onTransferTargetSelect={handleTransferTargetSelection}
-                              transferPairs={transferPairs}
-                              getInterchangeInfo={getInterchangeInfo}
-                              viewMode={viewMode}
-                              depotData={testDepots}
-                              scadaData={scadaData}
-                              doubleLineData={testDoubleLines}
-                              scissorRailData={testScissorRails}
-                            />
-                          )}
-                          {mapMode === 'leaflet' && (
-                            <LeafletMap stations={leafletStations} darkMode={darkMode} />
-                          )}
-                          {mapMode === 'analytics' && (
-                            <AnalyticsPage />
-                          )}
-                          {selectedStation && (
-                            <StationInfoBox
-                              station={selectedStation}
-                              onCancel={onCancelHandler}
-                              onDelete={onDeleteHandler}
-                              onStartTransfer={startTransferSelection}
-                            />
-                          )}
-                          <ZoomMenu zoomRef={zoomRef} />
-                          <BottomMenu
-                            onVectorMapClick={handleVectorMapClick}
-                            onLeafletMapClick={handleLeafletMapClick}
-                            onAnalyticsClick={handleAnalyticsPageClick}
-                            mapMode={mapMode}
-                          />
-                          <SimulationStatus />
-                        </div>
-                        <RightSideNav 
-                          isDarkMode={darkMode}
-                          toggleDarkMode={setDarkMode}
-                          zoomRef={zoomRef}
-                        />
-                      </div>
-                    } />
-                    <Route path="/energy-management" element={<EnergyManagement onClose={() => setShowPanel(false)} />} />
-                    <Route path="/monitoring-analytics" element={<MonitoringAnalytics onClose={() => setShowPanel(false)} />} />
-                    <Route path="/operational-control" element={<OperationalControl onClose={() => setShowPanel(false)} />} />
-                    <Route path="/passenger-information" element={<PassengerInformation onClose={() => setShowPanel(false)} />} />
-                    <Route path="/security-monitoring" element={<SecurityMonitoring onClose={() => setShowPanel(false)} />} />
-                    <Route path="/service-management" element={<ServiceManagement onClose={() => setShowPanel(false)} />} />
-                    <Route path="/settings" element={<Settings onExportMap={handleExportMap} onImportMap={handleImportMap} />} />
-                  </Routes>
-                </div>
-                <RightSideNav
-                  showPanel={showPanel}
-                  setShowPanel={setShowPanel}
-                  darkMode={darkMode}
-                  setDarkMode={setDarkMode}
-                  editing={editing}
-                  setEditing={setEditing}
-                  showStationNames={showStationNames}
-                  setShowStationNames={setShowStationNames}
-                  setIsSelectingStationToEdit={setIsSelectingStationToEdit}
-                  setSelectedStation={setSelectedStation}
-                  toggleStationNames={() => setShowStationNames((prev) => !prev)}
-                  viewMode={viewMode}
-                  onViewModeChange={handleViewModeChange}
+        <div className={`App ${darkMode ? 'dark-mode' : ''}`}>
+          {!isLoggedIn ? (
+            <Login onLogin={setIsLoggedIn} />
+          ) : (
+            <>
+              <SideNav setShowPanel={setShowPanel} />
+              <div className="main-content">
+                {/* Ana harita/istasyonlar her zaman arka planda */}
+                {mapMode === 'vector' && (
+                  <SubwayMap
+                    ref={zoomRef}
+                    editing={editing}
+                    darkMode={darkMode}
+                    onStationClick={handleStationClick}
+                    showStationNames={showStationNames}
+                    isSelectingTransfer={isSelectingTransfer}
+                    onTransferTargetSelect={handleTransferTargetSelection}
+                    transferPairs={transferPairs}
+                    getInterchangeInfo={getInterchangeInfo}
+                    viewMode={viewMode}
+                    depotData={testDepots}
+                    scadaData={scadaData}
+                    doubleLineData={testDoubleLines}
+                    scissorRailData={testScissorRails}
+                  />
+                )}
+                {mapMode === 'leaflet' && (
+                  <LeafletMap stations={leafletStations} darkMode={darkMode} />
+                )}
+                {mapMode === 'analytics' && (
+                  <AnalyticsPage darkMode={darkMode} />
+                )}
+                {selectedStation && (
+                  <StationInfoBox
+                    station={selectedStation}
+                    onCancel={onCancelHandler}
+                    onDelete={onDeleteHandler}
+                    onStartTransfer={startTransferSelection}
+                  />
+                )}
+                <ZoomMenu zoomRef={zoomRef} />
+                <BottomMenu
+                  onVectorMapClick={handleVectorMapClick}
+                  onLeafletMapClick={handleLeafletMapClick}
+                  onAnalyticsClick={handleAnalyticsPageClick}
+                  mapMode={mapMode}
                 />
-              </>
-            )}
-          </div>
-        </Router>
+                <SimulationStatus />
+              </div>
+              <RightSideNav 
+                isDarkMode={darkMode}
+                toggleDarkMode={() => setDarkMode(!darkMode)}
+                editing={editing}
+                setEditing={setEditing}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+                toggleStationNames={() => setShowStationNames(!showStationNames)}
+                setIsSelectingStationToEdit={setIsSelectingStationToEdit}
+                setSelectedStation={setSelectedStation}
+                viewMode={viewMode}
+                onViewModeChange={handleViewModeChange}
+              />
+
+              {/* Routes */}
+              <Routes>
+                <Route path="/" element={null} />
+                <Route path="/service-management" element={
+                  <div className="overlay-panel">
+                    <ServiceManagement onClose={() => navigate('/')} />
+                  </div>
+                } />
+                <Route path="/operational-control" element={
+                  <div className="overlay-panel">
+                    <OperationalControl onClose={() => navigate('/')} />
+                  </div>
+                } />
+                <Route path="/energy-management" element={
+                  <div className="overlay-panel">
+                    <EnergyManagement onClose={() => navigate('/')} />
+                  </div>
+                } />
+                <Route path="/monitoring-analytics" element={
+                  <div className="overlay-panel">
+                    <MonitoringAnalytics onClose={() => navigate('/')} />
+                  </div>
+                } />
+                <Route path="/passenger-information" element={
+                  <div className="overlay-panel">
+                    <PassengerInformation onClose={() => navigate('/')} />
+                  </div>
+                } />
+                <Route path="/security-monitoring" element={
+                  <div className="overlay-panel">
+                    <SecurityMonitoring onClose={() => navigate('/')} />
+                  </div>
+                } />
+                <Route path="/settings" element={
+                  <div className="overlay-panel">
+                    <Settings onExportMap={handleExportMap} onImportMap={handleImportMap} />
+                  </div>
+                } />
+                <Route path="/analytics" element={
+                  <div className="overlay-panel">
+                    <AnalyticsPage darkMode={darkMode} />
+                  </div>
+                } />
+              </Routes>
+            </>
+          )}
+        </div>
       </MetroProvider>
     </SimulationProvider>
   );
